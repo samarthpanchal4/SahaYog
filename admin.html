@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SahaYog — Cooperative dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <span class="wordmark">SahaYog</span>
+  <span class="who">
+    <span class="role-pill">Cooperative</span>
+    <span id="whoName"></span>
+    <button class="linklike" id="logoutBtn">Sign out</button>
+  </span>
+</nav>
+
+<main class="wrap">
+  <div class="page-head">
+    <h1 id="coopHeading">Overview</h1>
+    <p>Everything the platform depends on the cooperative to keep accountable — worker trust and dispute resolution.</p>
+  </div>
+
+  <div id="msgSlot"></div>
+
+  <div class="card">
+    <div class="stat-grid">
+      <div class="stat"><div class="num" id="statWorkers">—</div><div class="lbl">Active workers</div></div>
+      <div class="stat"><div class="num" id="statJobsToday">—</div><div class="lbl">Jobs today</div></div>
+      <div class="stat warn"><div class="num" id="statDisputes">—</div><div class="lbl">Open disputes</div></div>
+      <div class="stat"><div class="num" id="statRevenue">—</div><div class="lbl">Revenue this month</div></div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-top:24px;">
+    <div>
+      <div class="card">
+        <h2>Worker verification queue</h2>
+        <div id="verifyQueue" style="margin-top:14px;"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <h2>Open disputes</h2>
+        <div id="disputeList" style="margin-top:14px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:24px;">
+    <h2>Recent activity</h2>
+    <div id="activityList" style="margin-top:14px;"></div>
+  </div>
+</main>
+
+<footer class="page-footer">SahaYog · cooperative prototype · data lives in your Supabase project</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

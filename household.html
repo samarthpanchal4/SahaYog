@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SahaYog — Household</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <span class="wordmark">SahaYog</span>
+  <span class="who">
+    <span class="role-pill">Household</span>
+    <span id="whoName"></span>
+    <button class="linklike" id="logoutBtn">Sign out</button>
+  </span>
+</nav>
+
+<main class="wrap">
+  <div class="page-head">
+    <h1 id="greetHeading">Namaste</h1>
+    <p>Book a verified worker near you. Prices are the cooperative's fixed rate — no negotiation, no surprises.</p>
+  </div>
+
+  <div id="msgSlot"></div>
+
+  <div class="grid-2">
+    <!-- ---------------- Browse & book ---------------- -->
+    <div>
+      <div class="card">
+        <h2>Book a service</h2>
+        <p class="hint">Pick a category, then a verified worker in that category.</p>
+
+        <form id="bookingForm" style="margin-top:16px;">
+          <div class="field-row">
+            <label for="fCategory">Service</label>
+            <select id="fCategory" required></select>
+          </div>
+          <div class="field-row">
+            <label for="fWorker">Verified worker</label>
+            <select id="fWorker" required></select>
+            <p class="field-hint" id="workerHint"></p>
+          </div>
+          <div class="field-row">
+            <label for="fAddress">Address</label>
+            <input id="fAddress" type="text" required placeholder="e.g. H-14, Sector 12, Faridabad">
+          </div>
+          <div class="field-row">
+            <label for="fDate">Date &amp; time</label>
+            <input id="fDate" type="datetime-local" required>
+          </div>
+          <div class="field-row" style="display:flex; justify-content:space-between; align-items:baseline; background:var(--primary-tint); border-radius:12px; padding:12px 16px;">
+            <span style="font-size:13px; color:var(--primary-dark); font-weight:600;">Fixed cooperative rate</span>
+            <span id="fPrice" style="font-family:'Zilla Slab',serif; font-size:20px; font-weight:600; color:var(--primary-dark);">—</span>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit" id="bookBtn">Confirm booking</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ---------------- My bookings ---------------- -->
+    <div>
+      <div class="card">
+        <h2>My bookings</h2>
+        <div id="bookingsList" style="margin-top:14px;"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer">SahaYog · household prototype · data lives in your Supabase project</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/household.js"></script>
+</body>
+</html>

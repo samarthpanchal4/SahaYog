@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SahaYog — Sign in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="auth-shell">
+  <p class="wordmark" style="text-align:center; margin-bottom:22px;">SahaYog</p>
+
+  <div class="auth-card">
+    <div class="tabs" id="authTabs">
+      <button type="button" class="active" data-tab="login">Sign in</button>
+      <button type="button" data-tab="signup">Create account</button>
+    </div>
+
+    <div id="msgSlot"></div>
+
+    <!-- ---------------- LOGIN ---------------- -->
+    <form id="loginForm">
+      <div class="field-row">
+        <label for="loginEmail">Email</label>
+        <input id="loginEmail" type="email" required autocomplete="email">
+      </div>
+      <div class="field-row">
+        <label for="loginPassword">Password</label>
+        <input id="loginPassword" type="password" required autocomplete="current-password">
+      </div>
+      <button class="btn btn-primary btn-block" type="submit" id="loginBtn">Sign in</button>
+    </form>
+
+    <!-- ---------------- SIGNUP ---------------- -->
+    <form id="signupForm" style="display:none;">
+      <p class="field-row" style="margin-bottom:16px;">
+        <label>I am a…</label>
+        <div class="role-choice">
+          <label><input type="radio" name="role" value="household" checked><span>Household</span></label>
+          <label><input type="radio" name="role" value="worker"><span>Gig worker</span></label>
+          <label><input type="radio" name="role" value="admin"><span>Cooperative</span></label>
+        </div>
+      </p>
+
+      <div class="field-row">
+        <label for="suName">Full name</label>
+        <input id="suName" type="text" required>
+      </div>
+      <div class="field-row">
+        <label for="suPhone">Phone</label>
+        <input id="suPhone" type="tel" placeholder="10-digit mobile number" required>
+      </div>
+      <div class="field-row">
+        <label for="suEmail">Email</label>
+        <input id="suEmail" type="email" required autocomplete="email">
+      </div>
+      <div class="field-row">
+        <label for="suPassword">Password</label>
+        <input id="suPassword" type="password" required minlength="6" autocomplete="new-password">
+        <p class="field-hint">At least 6 characters.</p>
+      </div>
+
+      <!-- worker-only -->
+      <div id="workerFields" style="display:none;">
+        <div class="field-row">
+          <label for="suSkill">Skill category</label>
+          <select id="suSkill">
+            <option value="cleaning">Cleaning</option>
+            <option value="cooking">Cooking</option>
+            <option value="plumbing">Plumbing</option>
+            <option value="eldercare">Elder care</option>
+            <option value="electrical">Electrical</option>
+            <option value="garden">Garden</option>
+          </select>
+        </div>
+        <div class="field-row">
+          <label for="suCoopSelect">Your cooperative</label>
+          <select id="suCoopSelect"></select>
+          <p class="field-hint">You'll show as unverified until this cooperative approves you.</p>
+        </div>
+      </div>
+
+      <!-- household-only -->
+      <div id="householdFields" style="display:none;">
+        <div class="field-row">
+          <label for="suAddress">Home address</label>
+          <input id="suAddress" type="text" placeholder="e.g. H-14, Sector 12, Faridabad">
+        </div>
+      </div>
+
+      <!-- admin-only -->
+      <div id="adminFields" style="display:none;">
+        <div class="field-row">
+          <label for="suCoopName">New cooperative name</label>
+          <input id="suCoopName" type="text" placeholder="e.g. Sahakari Seva Mandal">
+          <p class="field-hint">This creates a new cooperative with you as its admin.</p>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-block" type="submit" id="signupBtn">Create account</button>
+    </form>
+  </div>
+
+  <p style="text-align:center; color:var(--muted); font-size:12.5px; margin-top:18px;">
+    Prototype for SIH26089 · demo data lives in your own Supabase project
+  </p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

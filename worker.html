@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SahaYog — Worker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <span class="wordmark">SahaYog</span>
+  <span class="who">
+    <span class="role-pill">Worker</span>
+    <span id="whoName"></span>
+    <button class="linklike" id="logoutBtn">Sign out</button>
+  </span>
+</nav>
+
+<main class="wrap">
+  <div class="page-head">
+    <h1 id="greetHeading">Namaste</h1>
+    <p id="verifyNote"></p>
+  </div>
+
+  <div id="msgSlot"></div>
+
+  <div class="grid-2">
+    <!-- ---------------- Left: earnings + availability ---------------- -->
+    <div>
+      <div class="card">
+        <div class="earn-card">
+          <div class="big" id="todayEarnings">₹0</div>
+          <div class="lbl" id="todayJobsLabel">Earned today · 0 jobs</div>
+        </div>
+        <div class="avail-toggle" id="availToggle" style="margin-top:14px;">
+          <span>Available for work</span>
+          <div class="switch" id="availSwitch"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>This week</h2>
+        <div id="weekList" style="margin-top:12px;"></div>
+        <div class="price-row" style="display:flex; justify-content:space-between; margin-top:8px; padding-top:12px; border-top:1px solid var(--line);">
+          <span style="font-weight:600;">Total this week</span>
+          <span id="weekTotal" style="font-family:'Zilla Slab',serif; font-weight:600; color:var(--primary-dark);">₹0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------------- Right: job feed ---------------- -->
+    <div>
+      <div class="card">
+        <h2>Requests near you</h2>
+        <p class="hint">New bookings households make in your category.</p>
+        <div id="pendingList" style="margin-top:14px;"></div>
+      </div>
+
+      <div class="card">
+        <h2>Accepted — mark complete once done</h2>
+        <div id="acceptedList" style="margin-top:12px;"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer">SahaYog · worker prototype · data lives in your Supabase project</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/worker.js"></script>
+</body>
+</html>
