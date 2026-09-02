@@ -85,18 +85,14 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
   const password = document.getElementById("suPassword").value;
 
   try{
-    let cooperative_id = null;
+    // Worker picks an existing cooperative — no insert needed, so this can
+    // stay before signUp. Admin's cooperative doesn't exist yet, so it has
+    // to be created *after* signUp: RLS requires an authenticated session
+    // to insert into `cooperatives`, and we're still anonymous beforehand.
+    let cooperative_id = role === "worker" ? document.getElementById("suCoopSelect").value : null;
 
-    // Admin signing up creates a brand new cooperative first.
-    if (role === "admin"){
-      const coopName = document.getElementById("suCoopName").value.trim();
-      if (!coopName) throw new Error("Enter a name for your cooperative.");
-      const { data: coop, error: coopErr } = await sb.from("cooperatives").insert({ name: coopName }).select().single();
-      if (coopErr) throw coopErr;
-      cooperative_id = coop.id;
-    }
-    if (role === "worker"){
-      cooperative_id = document.getElementById("suCoopSelect").value;
+    if (role === "admin" && !document.getElementById("suCoopName").value.trim()){
+      throw new Error("Enter a name for your cooperative.");
     }
 
     const { data, error } = await sb.auth.signUp({
@@ -104,6 +100,25 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
       options: { data: { full_name, role, phone, cooperative_id } }
     });
     if (error) throw error;
+
+    if (!data.session){
+      // Email confirmation is still on for this project — nothing below can
+      // run yet (no authenticated session), so stop here and let them
+      // finish setup after they confirm and sign in.
+      showMsg("Account created. Check your email to confirm, then sign in. (Cooperative/worker setup will need an admin follow-up — see README.)", "ok");
+      document.querySelector('#authTabs button[data-tab="login"]').click();
+      return;
+    }
+
+    // Admin: now authenticated, so this insert passes RLS. Create the
+    // cooperative, then attach it to our own just-created profile.
+    if (role === "admin" && data.user){
+      const coopName = document.getElementById("suCoopName").value.trim();
+      const { data: coop, error: coopErr } = await sb.from("cooperatives").insert({ name: coopName }).select().single();
+      if (coopErr) throw coopErr;
+      const { error: profErr } = await sb.from("profiles").update({ cooperative_id: coop.id }).eq("id", data.user.id);
+      if (profErr) throw profErr;
+    }
 
     // Worker also gets a row in `workers` (skill, verified=false, cooperative)
     if (role === "worker" && data.user){
@@ -123,12 +138,7 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
       if (addr) localStorage.setItem("sahayog_home_address", addr);
     }
 
-    if (data.session){
-      window.location.href = role + ".html";
-    } else {
-      showMsg("Account created. Check your email to confirm, then sign in.", "ok");
-      document.querySelector('#authTabs button[data-tab="login"]').click();
-    }
+    window.location.href = role + ".html";
   } catch(err){
     console.error(err);
     showMsg(err.message || "Something went wrong. Please try again.", "error");
